@@ -1,0 +1,78 @@
+### GameShelf Project Plan ###
+
+## 1. Project Overview
+GameShelf is a single-page application (SPA) designed to help users curate and manage their personal video game collection. Users can add games to their "shelf," view details, filter their collection by various criteria, and manage their library. This project will be built using React and Vite, with a heavy emphasis on the latest features of React Router v7 (Framework Mode) and advanced React hooks for state management and performance optimization.
+
+## 2. Core Features Breakdown
+
+**A. Authentication & User Session**
+- **Login/Signup:** Mock authentication flow. No real backend needed initially. We can simulate a user session.
+- **Persistent State:** User's session and game shelf should persist across browser refreshes (using localStorage).
+- **Protected Routes:** Only logged-in users can see and manage their game shelf.
+
+**B. The "Game Shelf" (Main View)**
+- This is the dashboard/homepage for a logged-in user.
+- **Grid/List View:** Display all games in the user's collection in a visually appealing grid or list.
+- **Search Functionality:** A search bar to instantly filter games by title.
+- **Advanced Filtering:**
+    - Filter by **Platform** (e.g., PC, PlayStation 5, Nintendo Switch).
+    - Filter by **Genre** (e.g., RPG, Action, Strategy).
+    - Filter by **Status** (e.g., Playing, Completed, Backlog, Dropped).
+- **Sorting:** Sort games by title, release date, or personal rating.
+
+**C. Game Detail Page**
+- Clicking on a game from the shelf navigates to its dedicated page.
+- Displays all information about the game:
+    - Cover Image
+    - Title, Description, Release Date
+    - Platform, Genre
+    - Personal Rating (e.g., 1-5 stars)
+    - Personal Notes/Review
+
+**D. Add/Edit/Delete Game**
+- **Add Game:** A form to add a new game to the collection with all the fields mentioned above.
+- **Edit Game:** The same form, pre-populated with existing game data, to update a game's details.
+- **Delete Game:** A button to remove a game from the collection (with a confirmation step).
+
+## 3. React Router v7 Concepts to Implement
+
+We will fully embrace the new "framework mode" of React Router.
+
+- **File-Based Routing:** We'll structure our files in the `app/routes/` directory. React Router will automatically generate routes based on this file structure (e.g., `app/routes/games.$gameId.jsx` will become the route `/games/:gameId`).
+- **`createBrowserRouter` & `RouterProvider`:** The foundation of the new routing system, configured in `app/routes.js`.
+- **`loader` Functions:** We will use loaders to fetch data *before* a route component renders.
+    - The main shelf route (`/games`) will have a `loader` to fetch the entire game list.
+    - The game detail route (`/games/:gameId`) will have a `loader` to fetch the data for that specific game.
+- **`action` Functions:** We will use actions to handle all data mutations (Create, Update, Delete).
+    - The "Add Game" form will submit to an `action` to create a new game.
+    - The "Edit Game" form will submit to an `action` to update a game.
+    - The "Delete Game" button will use a React Router `<Form>` to submit to an `action` that handles the deletion.
+- **`<Form>` Component:** We'll use the built-in `<Form>` component from React Router. It declaratively handles form submissions, prevents full page reloads, and automatically re-validates data after a successful action.
+- **`<Outlet>` & Layouts:** We'll create a root layout (`root.jsx`) with a persistent navigation bar and use `<Outlet />` to render the nested child routes.
+- **`useParams`:** To get the `gameId` from the URL in the game detail route.
+- **`useNavigate`:** For programmatic navigation where needed (e.g., redirecting after a successful action).
+- **`errorElement`:** To create graceful error boundaries for routes, catching issues from loaders or actions.
+
+## 4. Advanced React Concepts to Implement
+
+- **`useReducer`:** To manage the complex state of the game shelf. Instead of multiple `useState` calls for the game list, search query, filters, and sorting, we will have a single, robust reducer. This centralizes our state logic.
+- **`useContext`:** To provide the state from our `useReducer` (and the `dispatch` function) to the entire component tree. This will be our `GameContext`, allowing any component to access the game data or dispatch actions without prop drilling. We can also use it for the authentication state.
+- **`useMemo`:** To optimize performance. The derived list of games (after filtering and sorting) can be an expensive calculation. We will wrap this calculation in `useMemo` so it only runs when the original game list or the filter/sort criteria change, not on every single re-render.
+- **`useCallback`:** To memoize event handler functions that are passed down to child components (e.g., an `onDelete` function passed to each game card in the list). This prevents the child components from re-rendering unnecessarily when the parent component re-renders for other reasons.
+
+## 5. Suggested File Structure
+
+```
+/app
+├── app.css
+├── root.jsx            # Root layout (nav bar, etc.) with <Outlet />
+├── routes.js           # Where we define createBrowserRouter
+└── /routes
+    ├── _index.jsx      # The landing/welcome page (or redirect)
+    ├── login.jsx       # Login route
+    └── /games
+        ├── _index.jsx          # The main game shelf view (/games)
+        ├── new.jsx             # Form to add a new game (/games/new)
+        └── $gameId.jsx         # Game detail page (/games/some-id)
+            └── edit.jsx        # Form to edit a game (/games/some-id/edit)
+```
