@@ -7,18 +7,20 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card"
-export default function GameCard() {
+export default function GameCard({game}) {
     return (
         <Card className="transition duration-300 ease-in hover:shadow-2xl group">
         <CardHeader>
             <div className="overflow-hidden rounded-t-lg">
-                <img className="transition duration-300 ease-in hover:scale-105 group-hover:scale-105 h-full w-full pb-10" src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Game image" />
+                <img className="transition duration-300 ease-in hover:scale-105 group-hover:scale-105 max-md:h-85 h-80 w-full pb-8" src={game.background_image} alt="Game image" />
             </div>
             <CardTitle>
-                <h2>{"Game Header here"}</h2>
+                <h2>{game.name}</h2>
             </CardTitle>
-            <CardDescription>
-            <p>An open-world, action-adventure story set in Night City.</p>
+            <CardDescription className="flex justify-start items-center gap-2 text-clip">
+                {game.genres.map(genre => {
+                    return <p key={genre.id}>{genre.name}</p>
+                })}
             </CardDescription>
         </CardHeader>
         
@@ -27,10 +29,10 @@ export default function GameCard() {
                 <span className="text-amber-500">★★★★☆</span>
                 <span className="pl-2">4.2</span>
             </div>
-            <div className="flex justify-start items-center gap-2 pt-3">
-                <span className="bg-gray-200 text-sm font-sans self-center font-bold px-2 py-0.5 rounded-lg text-black">pc</span>
-                <span className="bg-gray-200 text-sm font-sans self-center font-bold px-2 py-0.5 rounded-lg text-black">xbox</span>
-                <span className="bg-gray-200 text-sm font-sans self-center font-bold px-2 py-0.5 rounded-lg text-black">dudu</span>
+            <div className="flex justify-start items-center flex-wrap gap-2 pt-3">
+                {game.parent_platforms.slice(0, 3).map(platform => {
+                   return <span key={platform.platform.id} className="bg-gray-100 text-sm font-sans self-center font-bold px-2 py-0.5 rounded-lg text-gray-600">{platform.platform.name}</span>
+                })}
             </div>
         </CardContent>
         <CardFooter>
@@ -42,5 +44,6 @@ export default function GameCard() {
             </CardAction>
         </CardFooter>
     </Card>
+        
     )
 }
