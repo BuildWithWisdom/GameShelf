@@ -8,6 +8,21 @@ import {
   CardTitle,
 } from "~/components/ui/card"
 export default function GameCard({game}) {
+    const ratings = (rating) => {
+        if(rating === 5) {
+            return <span className="text-amber-500">★★★★★</span>
+        } else if(rating > 4 && rating < 5) {
+            return <span className="text-amber-500">★★★★☆</span>
+        }else if(rating > 3 && rating < 4) {
+            return <span className="text-amber-500">★★★☆☆</span>
+        } else if(rating > 2 && rating < 3) {
+            return <span className="text-amber-500">★★☆☆☆</span>
+        }else if(rating > 1 && rating < 2) {
+            return <span className="text-amber-500">★☆☆☆☆</span>
+        } else {
+            return <span className="text-amber-500">☆☆☆☆☆</span>
+        }
+    }
     return (
         <Card className="transition duration-300 ease-in hover:shadow-2xl group">
         <CardHeader>
@@ -26,8 +41,8 @@ export default function GameCard({game}) {
         
             <CardContent>
             <div>
-                <span className="text-amber-500">★★★★☆</span>
-                <span className="pl-2">4.2</span>
+                {ratings(game.rating)}
+                <span className="pl-2">{game.rating}</span>
             </div>
             <div className="flex justify-start items-center flex-wrap gap-2 pt-3">
                 {game.parent_platforms.slice(0, 3).map(platform => {
