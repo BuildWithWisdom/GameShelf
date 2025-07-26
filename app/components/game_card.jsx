@@ -28,7 +28,7 @@ export default function GameCard({ game }) {
       <CardHeader>
         <div className="overflow-hidden rounded-t-lg">
           <img
-            className="transition duration-300 ease-in hover:scale-105 group-hover:scale-105 max-md:h-85 h-80 w-full pb-8"
+            className="transition duration-300 ease-in hover:scale-105 group-hover:scale-105 max-md:h-100 h-80 w-full pb-8"
             src={game.background_image}
             alt="Game image"
           />

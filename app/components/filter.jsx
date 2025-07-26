@@ -29,14 +29,14 @@ export default function Filter() {
 
   const handleRange = () => {
     if (!sd || !ed) return;
-    const params = new URLSearchParams(searchParams); 
-    const search = params.get('search')
+    const params = new URLSearchParams(searchParams);
+    const search = params.get("search");
     params.set(
       "dates",
       `${sd.toISOString().slice(0, 10)},${ed.toISOString().slice(0, 10)}`,
     );
     params.set("page", "1");
-    if (search) params.set('search', search)
+    if (search) params.set("search", search);
     navigate(`?${params.toString()}`);
   };
   useEffect(handleRange, [sd, ed]);
@@ -46,15 +46,19 @@ export default function Filter() {
     p.set("page", "1");
     navigate("?" + p.toString());
   }
-  const [searchText, setSearchText] = useState('')
+  const [searchText, setSearchText] = useState("");
   return (
     <div className="border border-gray-200 rounded-md p-6 mb-10 shadow-sm">
       <h2 className="font-sans pb-4 font-bold">Filters</h2>
-      <Form method="get" action="/" onSubmit={(e) => {
-        e.preventDefault()
-        console.log(searchText)
-        updateSearch(searchText)
-      }}>
+      <Form
+        method="get"
+        action="/"
+        onSubmit={(e) => {
+          e.preventDefault();
+          console.log(searchText);
+          updateSearch(searchText);
+        }}
+      >
         <div className="flex flex-col gap-6">
           <div className="grid w-full max-w-200 items-center gap-3">
             <Label htmlFor="search">Search games</Label>
@@ -64,8 +68,8 @@ export default function Filter() {
               id="search"
               name="search"
               onChange={(e) => {
-                setSearchText(e.target.value)
-                updateSearch(searchText)
+                setSearchText(e.target.value);
+                updateSearch(searchText);
               }}
               placeholder="Search by title, developers, or publishers"
             />
@@ -92,13 +96,7 @@ export default function Filter() {
   );
 }
 
-export function ReleaseDate({
-  labelText,
-  date,
-  open,
-  setOpen,
-  setDate,
-}) {
+export function ReleaseDate({ labelText, date, open, setOpen, setDate }) {
   //   const acceptedDate = date.toString().
   return (
     <div className="grid w-full max-w-100 items-center gap-3">
