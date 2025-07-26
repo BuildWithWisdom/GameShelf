@@ -8,5 +8,5 @@ export function meta() {
 }
 
 export default function Home() {
-  return <Welcome text="Welcome to Collections"/>;
+  return <Welcome text="Welcome to Collections" />;
 }
