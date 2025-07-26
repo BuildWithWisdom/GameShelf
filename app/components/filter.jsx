@@ -5,7 +5,6 @@ import { Calendar } from "~/components/ui/calendar";
 import { Form, useNavigate, useSearchParams } from "react-router";
 import { useState, useEffect } from "react";
 import { ChevronDownIcon } from "lucide-react";
-import { useDebouncedCallback } from "use-debounce";
 import {
   Select,
   SelectContent,
@@ -28,14 +27,6 @@ export default function Filter() {
   const [openStart, setOpenStart] = useState(false);
   const [openEnd, setOpenEnd] = useState(false);
 
-  function onSelect() {
-    console.log(startingDate, endingDate);
-    setSd(sd);
-    setEd(ed);
-    setOpenStart(false);
-    setOpenEnd(false);
-  }
-
   const handleRange = () => {
     if (!sd || !ed) return;
     const params = new URLSearchParams(searchParams); 
@@ -49,20 +40,21 @@ export default function Filter() {
     navigate(`?${params.toString()}`);
   };
   useEffect(handleRange, [sd, ed]);
-  // Debounce callback
-  const debounced = useDebouncedCallback(
-    (value) => {
-        const params = new URLSearchParams(searchParams); 
-    params.set("page", "1");
-      navigate(`?search=${encodeURIComponent(value)}&${params.toString()}`);
-    },
-    // delay in ms
-    500,
-  );
+  function updateSearch(value) {
+    const p = new URLSearchParams(searchParams);
+    p.set("search", value);
+    p.set("page", "1");
+    navigate("?" + p.toString());
+  }
+  const [searchText, setSearchText] = useState('')
   return (
     <div className="border border-gray-200 rounded-md p-6 mb-10 shadow-sm">
       <h2 className="font-sans pb-4 font-bold">Filters</h2>
-      <Form method="get" action="/games">
+      <Form method="get" action="/" onSubmit={(e) => {
+        e.preventDefault()
+        console.log(searchText)
+        updateSearch(searchText)
+      }}>
         <div className="flex flex-col gap-6">
           <div className="grid w-full max-w-200 items-center gap-3">
             <Label htmlFor="search">Search games</Label>
@@ -71,7 +63,10 @@ export default function Filter() {
               type="text"
               id="search"
               name="search"
-              onChange={(e) => debounced(e.target.value)}
+              onChange={(e) => {
+                setSearchText(e.target.value)
+                updateSearch(searchText)
+              }}
               placeholder="Search by title, developers, or publishers"
             />
           </div>
@@ -103,7 +98,6 @@ export function ReleaseDate({
   open,
   setOpen,
   setDate,
-  onSelect,
 }) {
   //   const acceptedDate = date.toString().
   return (
