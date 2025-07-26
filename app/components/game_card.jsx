@@ -46,7 +46,7 @@ export default function GameCard({ game }) {
       <CardContent>
         <div>
           {ratings(game.rating)}
-          <span className="pl-2">{game.rating}</span>
+          <span className="pl-2 text-sm sm:text-base">{game.rating}</span>
         </div>
         <div className="flex justify-start items-center flex-wrap gap-2 pt-3">
           {(game.parent_platforms ?? []).slice(0, 3).map((platform) => {
