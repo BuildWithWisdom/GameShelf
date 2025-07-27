@@ -69,7 +69,6 @@ export default function Filter() {
               name="search"
               onChange={(e) => {
                 setSearchText(e.target.value);
-                updateSearch(searchText);
               }}
               placeholder="Search by title, developers, or publishers"
             />

@@ -18,13 +18,11 @@ export default function Navbar({children}) {
   return (
     <header className="mb-14 z-10 fixed w-full">
       <LargeScreen />
-      <SidebarProvider className="sm:hidden">
       <SmallScreen />
-      <main>
-        <SidebarTrigger className="max-sm:absolute max-sm:top-2.5 max-sm:pl-1"/>
+      <div>
+        <SidebarTrigger className="max-sm:absolute max-sm:top-2.5 max-sm:pl-1 sm:hidden"/>
         {children}
-      </main>
-    </SidebarProvider>
+      </div>
     </header>
   );
 }

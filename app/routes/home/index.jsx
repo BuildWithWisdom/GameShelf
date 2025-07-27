@@ -40,8 +40,8 @@ export default function Home({ loaderData }) {
   return (
     <>
       <div className="pb-8">
-        <h1 className="font-sans text-2xl font-bold pb-1">Discover Games</h1>
-        <p className="font-light text-gray-600 text-sm sm:text-base font-sans">
+        <h1 className="font-sans text-xl sm:text-2xl font-bold pb-1">Discover Games</h1>
+        <p className="font-light text-gray-600 text-[13px] sm:text-base font-sans">
           Find your next favorite game from our curated collection
         </p>
       </div>
