@@ -27,6 +27,7 @@ export default function Filter() {
   const [openStart, setOpenStart] = useState(false);
   const [openEnd, setOpenEnd] = useState(false);
 
+  // Handles the date range selection and updates the URL.
   const handleRange = () => {
     if (!sd || !ed) return;
     const params = new URLSearchParams(searchParams);
@@ -40,6 +41,8 @@ export default function Filter() {
     navigate(`?${params.toString()}`);
   };
   useEffect(handleRange, [sd, ed]);
+
+  // Updates the URL with the search query.
   function updateSearch(value) {
     const p = new URLSearchParams(searchParams);
     p.set("search", value);
@@ -49,7 +52,7 @@ export default function Filter() {
   const [searchText, setSearchText] = useState("");
   return (
     <div className="border border-gray-200 rounded-md p-6 mb-10 shadow-sm">
-      <h2 className="font-sans pb-4 font-bold">Filters</h2>
+      <h2 className="font-sans pb-4 font-bold 2xl:text-lg">Filters</h2>
       <Form
         method="get"
         action="/"
@@ -73,6 +76,7 @@ export default function Filter() {
             />
           </div>
           <div className="flex max-[464px]:flex-col justify-between max-w-200 items-center gap-4">
+            {/* Release date filter components */}
             <ReleaseDate
               labelText="Start"
               date={sd}

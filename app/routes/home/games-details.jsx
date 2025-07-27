@@ -1,0 +1,1 @@
+// This component will render the details of a single game.

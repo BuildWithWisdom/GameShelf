@@ -9,6 +9,7 @@ export function meta() {
   ];
 }
 
+// Fetches the list of games from the RAWG API.
 export async function loader({ request }) {
   const url = new URL(request.url);
   const page = Number(url.searchParams.get("page") || 1);
@@ -40,17 +41,21 @@ export default function Home({ loaderData }) {
   return (
     <>
       <div className="pb-8">
-        <h1 className="font-sans text-xl sm:text-2xl font-bold pb-1">Discover Games</h1>
-        <p className="font-light text-gray-600 text-[13px] sm:text-base font-sans">
+        <h1 className="font-sans text-xl sm:text-2xl 2xl:text-2xl font-bold pb-1">
+          Discover Games
+        </h1>
+        <p className="font-light text-gray-600 text-[13px] sm:text-base 2xl:text-lg font-sans">
           Find your next favorite game from our curated collection
         </p>
       </div>
       <Filter />
+      {/* Renders the list of games. */}
       <section className="grid max-md:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {games.map((game) => {
           return <GameCard key={game.id} game={game} />;
         })}
       </section>
+      {/* Renders the pagination controls if there is more than one page. */}
       {totalPages > 1 && (
         <section className="mt-4">
           <NextPrevPage
