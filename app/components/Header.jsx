@@ -1,10 +1,93 @@
 import { Link, NavLink } from "react-router";
 import { Gamepad2 } from "lucide-react";
 import { Menubar, MenubarMenu, MenubarTrigger } from "~/components/ui/menubar";
-export default function Navbar() {
+import { Folder, Home, Bookmark, Settings } from "lucide-react"
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+  SidebarTrigger
+} from "~/components/ui/sidebar"
+export default function Navbar({children}) {
   return (
     <header className="mb-14 z-10 fixed w-full">
-      <Menubar>
+      <LargeScreen />
+      <SidebarProvider className="sm:hidden">
+      <SmallScreen />
+      <main>
+        <SidebarTrigger className="max-sm:absolute max-sm:top-2.5 max-sm:pl-1"/>
+        {children}
+      </main>
+    </SidebarProvider>
+    </header>
+  );
+}
+
+export function SmallScreen() {
+  const items = [
+  {
+    title: "Discovery",
+    url: "/",
+    icon: Home,
+  },
+  {
+    title: "Collection",
+    url: "collection",
+    icon: Folder,
+  },
+  {
+    title: "Wishlist",
+    url: "wishlist",
+    icon: Bookmark,
+  },
+  {
+    title: "Settings",
+    url: "#",
+    icon: Settings,
+  },
+]
+  return (
+    <Sidebar>
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupLabel className="mb-3 mt-2">
+            <Link
+              to="/"
+              className="flex justify-between items-center gap-2 font-bold"
+            >
+              <Gamepad2 />
+              <span className="text-lg">Gameshelf</span>
+            </Link>
+          </SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {items.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild>
+                    <NavLink to={item.url}>
+                      <item.icon />
+                      <span>{item.title}</span>
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+    </Sidebar>
+  )
+}
+
+export function LargeScreen () {
+  return (
+    <Menubar className="max-sm:pl-8">
         <MenubarMenu>
           <MenubarTrigger>
             <Link
@@ -15,7 +98,7 @@ export default function Navbar() {
               <span>Gameshelf</span>
             </Link>
           </MenubarTrigger>
-          <MenubarTrigger>
+          <MenubarTrigger className="max-sm:hidden">
             <NavLink
               className={({ isActive }) =>
                 isActive ? "text-black" : "text-gray-600"
@@ -25,7 +108,7 @@ export default function Navbar() {
               Discorver
             </NavLink>
           </MenubarTrigger>
-          <MenubarTrigger>
+          <MenubarTrigger className="max-sm:hidden">
             <NavLink
               className={({ isActive }) =>
                 isActive ? "text-black" : "text-gray-600"
@@ -35,7 +118,7 @@ export default function Navbar() {
               Collection
             </NavLink>
           </MenubarTrigger>
-          <MenubarTrigger>
+          <MenubarTrigger className="max-sm:hidden">
             <NavLink
               className={({ isActive }) =>
                 isActive ? "text-black" : "text-gray-600"
@@ -47,6 +130,5 @@ export default function Navbar() {
           </MenubarTrigger>
         </MenubarMenu>
       </Menubar>
-    </header>
-  );
+  )
 }
