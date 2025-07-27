@@ -55,7 +55,6 @@ export default function Filter() {
         action="/"
         onSubmit={(e) => {
           e.preventDefault();
-          console.log(searchText);
           updateSearch(searchText);
         }}
       >
@@ -70,7 +69,7 @@ export default function Filter() {
               onChange={(e) => {
                 setSearchText(e.target.value);
               }}
-              placeholder="Search by title, developers, or publishers"
+              placeholder="Search by title"
             />
           </div>
           <div className="flex max-[464px]:flex-col justify-between max-w-200 items-center gap-4">

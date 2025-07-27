@@ -11,31 +11,42 @@ import {
 
 export default function NextPrevPage({ nextPage, prevPage, totalPages }) {
   const [searchParams] = useSearchParams();
-  const currentPage = searchParams.get("page");
+
+const build = (p) => {
+  const next = new URLSearchParams(searchParams);
+  next.set("page", String(p));
+  return `?${next}`;
+};
+  const currentPage = Number(searchParams.get("page") || 1);
   return (
     <Pagination>
       <PaginationContent>
+        {prevPage &&
         <PaginationItem>
-          <PaginationPrevious to={`?page=${prevPage}`} />
+           
+          <PaginationPrevious to={build(prevPage)} />
         </PaginationItem>
-        {currentPage > 1 && (
+}
+        {prevPage && (
           <PaginationItem>
             <PaginationEllipsis />
           </PaginationItem>
         )}
         <PaginationItem>
-          <PaginationLink to="?page=1" isActive>
+          <PaginationLink to={`?${currentPage}`} isActive>
             {currentPage}
           </PaginationLink>
         </PaginationItem>
-        {totalPages > currentPage && (
+        {nextPage && (
           <PaginationItem>
             <PaginationEllipsis />
           </PaginationItem>
         )}
+        {nextPage && (
         <PaginationItem>
-          <PaginationNext to={`?page=${nextPage}`} />
+          <PaginationNext to={build(nextPage)} />
         </PaginationItem>
+        )}
       </PaginationContent>
     </Pagination>
   );

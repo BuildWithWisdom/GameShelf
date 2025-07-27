@@ -36,7 +36,7 @@ export async function loader({ request }) {
 
 export default function Home({ loaderData }) {
   const { gamesCount, games, nextPage, prevPage } = loaderData;
-  const totalPages = Math.ceil(gamesCount / games.length);
+  const totalPages = Math.ceil(gamesCount / games?.length);
   return (
     <>
       <div className="pb-8">
