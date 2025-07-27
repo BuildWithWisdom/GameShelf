@@ -7,7 +7,7 @@ export default function Layout() {
     <>
       <SidebarProvider>
         <Navbar />
-        <main className="pt-22 px-7 sm:px-16 lg:px-24 2xl:px-46 pb-8 w-full">
+        <main className="pt-22 px-7 sm:px-16 xl:px-24  2xl:px-46 pb-8 w-full">
           {/* Renders the content of the current route. */}
           <Outlet />
         </main>

@@ -50,7 +50,7 @@ export default function Home({ loaderData }) {
       </div>
       <Filter />
       {/* Renders the list of games. */}
-      <section className="grid max-md:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <section className="grid max-md:grid-cols-1 max-lg:grid-cols-2 lg:grid-cols-3 gap-6">
         {games.map((game) => {
           return <GameCard key={game.id} game={game} />;
         })}
