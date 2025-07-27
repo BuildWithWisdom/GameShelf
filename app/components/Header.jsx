@@ -14,14 +14,13 @@ import {
   SidebarProvider,
   SidebarTrigger
 } from "~/components/ui/sidebar"
-export default function Navbar({children}) {
+export default function Navbar() {
   return (
     <header className="mb-14 z-10 fixed w-full">
       <LargeScreen />
+      <div className="sm:hidden">
       <SmallScreen />
-      <div>
-        <SidebarTrigger className="max-sm:absolute max-sm:top-2.5 max-sm:pl-1 sm:hidden"/>
-        {children}
+        <SidebarTrigger className="max-sm:absolute max-sm:top-2.5 max-sm:pl-1"/>
       </div>
     </header>
   );
