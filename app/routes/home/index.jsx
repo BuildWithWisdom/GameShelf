@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import Filter from "../../components/filter";
 import GameCard from "../../components/game_card";
 import NextPrevPage from "../../components/pagination";
@@ -52,7 +53,7 @@ export default function Home({ loaderData }) {
       {/* Renders the list of games. */}
       <section className="grid max-md:grid-cols-1 max-lg:grid-cols-2 lg:grid-cols-3 gap-6">
         {games.map((game) => {
-          return <GameCard key={game.id} game={game} />;
+          return <Link key={game.id} to={`/games/${game.id}`}><GameCard game={game} /></Link>;
         })}
       </section>
       {/* Renders the pagination controls if there is more than one page. */}
