@@ -1,4 +1,3 @@
-import { Welcome } from "../../welcome/welcome";
 
 export function meta() {
   return [
@@ -8,5 +7,5 @@ export function meta() {
 }
 
 export default function Home() {
-  return <Welcome text="Welcome to Collections" />;
+  return <h1>Welcome to Collections</h1>;
 }

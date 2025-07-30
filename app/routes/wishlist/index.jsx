@@ -1,4 +1,3 @@
-import { Welcome } from "../../welcome/welcome";
 
 export function meta() {
   return [
@@ -8,5 +7,5 @@ export function meta() {
 }
 
 export default function Home() {
-  return <Welcome text="Welcome to wishlist" />;
+  return <h1>Welcome to Wishlist</h1>;
 }
