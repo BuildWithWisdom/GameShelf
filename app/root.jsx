@@ -6,6 +6,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
+import { ThemeProvider } from "./components/theme-provider.jsx";
 
 import "./app.css";
 
@@ -42,7 +43,11 @@ export function Layout({ children }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  return <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <Outlet />;
+      {/* {children} */}
+    </ThemeProvider>
+   
 }
 
 export function ErrorBoundary({ error }) {

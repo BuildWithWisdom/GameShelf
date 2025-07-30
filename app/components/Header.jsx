@@ -13,6 +13,7 @@ import {
   SidebarMenuItem,
   SidebarTrigger,
 } from "~/components/ui/sidebar";
+import { ModeToggle } from "./mode-toggle";
 export default function Navbar() {
   return (
     <header className="mb-14 z-10 fixed w-full">
@@ -86,8 +87,9 @@ export function SmallScreen() {
 
 export function LargeScreen() {
   return (
-    <Menubar className="max-sm:pl-8">
-      <MenubarMenu>
+    <Menubar className="max-sm:pl-8 pr-4 flex justify-between items-center">
+      <div className="flex">
+        <MenubarMenu>
         <MenubarTrigger>
           <Link
             to="/"
@@ -101,7 +103,7 @@ export function LargeScreen() {
         <MenubarTrigger className="max-sm:hidden">
           <NavLink
             className={({ isActive }) =>
-              isActive ? "text-black" : "text-gray-600"
+              isActive ? "text-black dark:text-gray-400" : "text-gray-600 dark:text-gray-100"
             }
             to="/"
           >
@@ -111,7 +113,7 @@ export function LargeScreen() {
         <MenubarTrigger className="max-sm:hidden">
           <NavLink
             className={({ isActive }) =>
-              isActive ? "text-black" : "text-gray-600"
+              isActive ? "text-black dark:text-gray-400" : "text-gray-600 dark:text-gray-100"
             }
             to="collection"
           >
@@ -121,7 +123,7 @@ export function LargeScreen() {
         <MenubarTrigger className="max-sm:hidden">
           <NavLink
             className={({ isActive }) =>
-              isActive ? "text-black" : "text-gray-600"
+              isActive ? "text-black dark:text-gray-400" : "text-gray-600 dark:text-gray-100"
             }
             to="wishlist"
           >
@@ -129,6 +131,10 @@ export function LargeScreen() {
           </NavLink>
         </MenubarTrigger>
       </MenubarMenu>
+      </div>
+      <div className="cursor-pointer">
+        <ModeToggle />
+      </div>
     </Menubar>
   );
 }

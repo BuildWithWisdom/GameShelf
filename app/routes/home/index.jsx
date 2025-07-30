@@ -45,7 +45,7 @@ export default function Home({ loaderData }) {
         <h1 className="font-sans text-xl sm:text-2xl 2xl:text-2xl font-bold pb-1">
           Discover Games
         </h1>
-        <p className="font-light text-gray-600 text-[13px] sm:text-base 2xl:text-lg font-sans">
+        <p className="font-light text-gray-600 text-[13px] sm:text-base 2xl:text-lg font-sans dark:text-gray-300">
           Find your next favorite game from our curated collection
         </p>
       </div>

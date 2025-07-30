@@ -8,7 +8,7 @@ export default function Overview() {
         <>
         <GameDetailCard>
             <h3 className="text-bold font-sans max-2xs:text-lg text-2xl pb-3">About {game.name}</h3>
-            <p className="text-gray-600 max-2xs:text-sm text-base/relaxed">{game.description_raw}</p>
+            <p className="text-gray-600 dark:text-gray-300 max-2xs:text-sm text-base/relaxed">{game.description_raw}</p>
         </GameDetailCard>
         </>
     )

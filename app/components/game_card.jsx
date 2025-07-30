@@ -56,7 +56,7 @@ export default function GameCard({ game }) {
             return (
               <span
                 key={platform.platform.id}
-                className="bg-gray-100 text-sm 2xl:text-base font-sans self-center font-bold px-2 py-0.5 rounded-lg text-gray-600"
+                className="bg-gray-100 dark:bg-gray-950 text-sm 2xl:text-base font-sans self-center font-bold px-3 py-0.5 rounded-lg dark:text-gray-300 text-gray-600"
               >
                 {platform.platform.name}
               </span>
@@ -65,8 +65,8 @@ export default function GameCard({ game }) {
         </div>
       </CardContent>
       <CardFooter>
-        <CardAction className=" flex cursor-pointer flex-col items-center justify-center py-1.5 rounded-md bg-black w-full">
-          <button className="text-white cursor-pointer text-sm 2xl:text-base font-sans">
+        <CardAction className="flex cursor-pointer flex-col items-center justify-center py-1.5 rounded-md dark:bg-white bg-black w-full">
+          <button className="text-white dark:text-black cursor-pointer text-sm 2xl:text-base font-sans">
             <span className="pr-4">+</span>
             Add to collection
           </button>
