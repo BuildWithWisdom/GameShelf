@@ -18,12 +18,14 @@ export async function loader({ request }) {
   const search = url.searchParams.get("search") || "";
   const dates = url.searchParams.get("dates") || "";
   const genres = url.searchParams.get("genres") || "";
+  const platforms = url.searchParams.get("platforms") || ""
   const params = new URLSearchParams();
   params.set("key", apiKey);
   params.set("page", page);
   params.set("page_size", 30);
   if (search) params.set("search", search);
   if (genres) params.set("genres", genres);
+  if (platforms) params.set("platforms", platforms);
   if (dates) params.set("dates", dates);
   const apiUrl = `https://api.rawg.io/api/games?${params.toString()}`;
   const response = await fetch(apiUrl);
@@ -39,6 +41,7 @@ export async function loader({ request }) {
 export default function Home({ loaderData }) {
   const { gamesCount, games, nextPage, prevPage } = loaderData;
   const totalPages = Math.ceil(gamesCount / games?.length);
+  // console.log(games)
   return (
     <>
       <div className="pb-8">
@@ -49,7 +52,7 @@ export default function Home({ loaderData }) {
           Find your next favorite game from our curated collection
         </p>
       </div>
-      <Filter />
+      <Filter games={games}/>
       {/* Renders the list of games. */}
       <section className="grid max-md:grid-cols-1 max-lg:grid-cols-2 lg:grid-cols-3 gap-6">
         {games.map((game) => {

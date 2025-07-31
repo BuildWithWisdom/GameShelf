@@ -1,4 +1,11 @@
 import { Input } from "~/components/ui/input";
+import { Checkbox } from "~/components/ui/checkbox"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "~/components/ui/accordion"
 import { Label } from "~/components/ui/label";
 import { Button } from "~/components/ui/button";
 import { Calendar } from "~/components/ui/calendar";
@@ -6,26 +13,18 @@ import { Form, useNavigate, useSearchParams } from "react-router";
 import { useState, useEffect } from "react";
 import { ChevronDownIcon } from "lucide-react";
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "~/components/ui/select";
-import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "~/components/ui/popover";
-export default function Filter() {
+export default function Filter({games}) {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [sd, setSd] = useState(undefined);
   const [ed, setEd] = useState(undefined);
   const [openStart, setOpenStart] = useState(false);
   const [openEnd, setOpenEnd] = useState(false);
+const [checkedPlatforms, setCheckedPlatforms] = useState([])
 
   // Handles the date range selection and updates the URL.
   const handleRange = () => {
@@ -49,6 +48,22 @@ export default function Filter() {
     p.set("page", "1");
     navigate("?" + p.toString());
   }
+  function updatePlatform() {
+    const params = new URLSearchParams(searchParams)
+    const platforms = checkedPlatforms.join(",")
+    const search = params.get("search");
+    const dates = params.get("dates")
+    params.set("page", "1");
+    params.set("platforms", platforms)
+    if (search) params.set("search", search);
+    if (dates) params.set("dates", dates);
+    if(platforms) params.set("platforms", platforms)
+      else {
+          params.delete("platforms");
+      }
+    navigate(`?${params.toString()}`);
+  }
+  useEffect(updatePlatform, [checkedPlatforms])
   const [searchText, setSearchText] = useState("");
   return (
     <div className="border border-gray-200 rounded-md p-6 mb-10 shadow-sm">
@@ -93,6 +108,13 @@ export default function Filter() {
             />
           </div>
         </div>
+
+        <div>
+          <Advanced 
+          checkedPlatforms={checkedPlatforms}
+          setCheckedPlatforms={setCheckedPlatforms}
+          games={games}/>
+        </div>
       </Form>
     </div>
   );
@@ -132,25 +154,87 @@ export function ReleaseDate({ labelText, date, open, setOpen, setDate }) {
   );
 }
 
-export function Rating() {
+export function Advanced({games, checkedPlatforms, setCheckedPlatforms}) {
+  const platforms = [
+  { id: 4,  slug: 'pc',           name: 'PC' },
+  { id: 18, slug: 'playstation4', name: 'PlayStation 4' },
+  { id: 1,  slug: 'xbox-one',     name: 'Xbox One' },
+  { id: 7,  slug: 'nintendo-switch', name: 'Nintendo Switch' },
+  { id: 3,  slug: 'ios',          name: 'iOS' },
+  { id: 21, slug: 'android',      name: 'Android' },
+  { id: 8,  slug: 'playstation3', name: 'PlayStation 3' },
+  { id: 14, slug: 'xbox360',      name: 'Xbox 360' },
+  { id: 6,  slug: 'linux',        name: 'Linux' },
+  { id: 9,  slug: 'psp',          name: 'PlayStation Portable' },
+  { id: 13, slug: 'ps-vita',      name: 'PlayStation Vita' },
+  { id: 19, slug: 'wii-u',        name: 'Wii U' },
+  { id: 5,  slug: 'macos',        name: 'macOS' },
+  { id: 11, slug: 'wii',          name: 'Wii' },
+  { id: 15, slug: 'nintendo-3ds', name: 'Nintendo 3DS' },
+  { id: 16, slug: 'nintendo-ds',  name: 'Nintendo DS' },
+  { id: 10, slug: 'gamecube',     name: 'GameCube' },
+  { id: 12, slug: 'xbox',         name: 'Xbox' },
+  { id: 20, slug: 'dreamcast',    name: 'Dreamcast' },
+  { id: 22, slug: 'game-boy-advance', name: 'Game Boy Advance' },
+  { id: 24, slug: 'playstation2', name: 'PlayStation 2' },
+  { id: 25, slug: 'playstation',  name: 'PlayStation' },
+  { id: 26, slug: 'game-boy-color', name: 'Game Boy Color' },
+  { id: 27, slug: 'game-boy',     name: 'Game Boy' },
+  { id: 28, slug: 'sega-saturn',  name: 'SEGA Saturn' },
+  { id: 29, slug: 'sega-genesis', name: 'SEGA Genesis' },
+  { id: 30, slug: 'sega-cd',      name: 'SEGA CD' },
+  { id: 31, slug: 'sega-32x',     name: 'SEGA 32X' },
+  { id: 32, slug: 'sega-master-system', name: 'SEGA Master System' },
+  { id: 33, slug: 'commodore-amiga', name: 'Commodore Amiga' },
+  { id: 34, slug: 'atari-st',     name: 'Atari ST' },
+  { id: 35, slug: 'atari-lynx',   name: 'Atari Lynx' },
+  { id: 36, slug: 'atari-jaguar', name: 'Atari Jaguar' },
+  { id: 37, slug: 'atari-7800',   name: 'Atari 7800' },
+  { id: 38, slug: 'atari-5200',   name: 'Atari 5200' },
+  { id: 39, slug: 'atari-2600',   name: 'Atari 2600' },
+  { id: 40, slug: 'neo-geo',      name: 'Neo Geo' },
+  { id: 41, slug: 'turbo-grafx-16', name: 'TurboGrafx-16' },
+  { id: 42, slug: 'game-gear',    name: 'Game Gear' },
+  { id: 43, slug: 'sega-pico',    name: 'SEGA Pico' },
+  { id: 44, slug: '3do',          name: '3DO' },
+  { id: 45, slug: 'jaguar-cd',    name: 'Jaguar CD' },
+  { id: 46, slug: 'philips-cd-i', name: 'Philips CD-i' },
+  { id: 47, slug: 'gizmondo',     name: 'Gizmondo' },
+  { id: 48, slug: 'n-gage',       name: 'N-Gage' },
+  { id: 49, slug: 'ngage',        name: 'N-Gage (duplicate)' },
+  { id: 50, slug: 'web',          name: 'Web Browser' }
+];
+
   return (
-    <div className="grid w-full max-w-100 items-center gap-3">
-      <Label htmlFor="email">metacritic rating</Label>
-      <Select>
-        <SelectTrigger className="w-full cursor-pointer">
-          <SelectValue placeholder="Select a fruit" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            <SelectLabel>Fruits</SelectLabel>
-            <SelectItem value="apple">Apple</SelectItem>
-            <SelectItem value="banana">Banana</SelectItem>
-            <SelectItem value="blueberry">Blueberry</SelectItem>
-            <SelectItem value="grapes">Grapes</SelectItem>
-            <SelectItem value="pineapple">Pineapple</SelectItem>
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-    </div>
+    <Accordion type="single" collapsible>
+  <AccordionItem value="item-1">
+    <AccordionTrigger>Advanced Filters</AccordionTrigger>
+    <AccordionContent>
+      <div>
+        <h4 className="text-sm pb-4">Platforms</h4>
+        <div className="flex items-center gap-3 flex-wrap">
+          {platforms.map(platform => {
+            return <div key={platform.id} className="flex items-center gap-2">
+            <Checkbox 
+            id={platform.name} 
+            checked={checkedPlatforms.includes(platform.id)}
+            onCheckedChange={() => {
+              setCheckedPlatforms(prev => {
+                if(prev.includes(platform.id)) {
+                  return prev.filter(p => p !== platform.id)
+                }
+                else {return [...prev, platform.id]}
+              })
+              console.log(checkedPlatforms)
+            }}
+            />
+            <label className="text-[13px]" htmlFor={platform.name}>{platform.name}</label>
+          </div>
+          })}
+        </div>
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
   );
 }
