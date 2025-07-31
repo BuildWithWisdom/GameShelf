@@ -22,7 +22,7 @@ export default function Navbar() {
       <div className="sm:hidden">
         {/* Renders the navigation bar for small screens. */}
         <SmallScreen />
-        <SidebarTrigger className="max-sm:absolute max-sm:top-2.5 max-sm:pl-1" />
+        <SidebarTrigger className="max-sm:absolute max-sm:top-2.5 max-sm:pl-3" />
       </div>
     </header>
   );
@@ -70,7 +70,7 @@ export function SmallScreen() {
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <NavLink to={item.url}>
+                    <NavLink  to={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
                     </NavLink>
@@ -87,7 +87,7 @@ export function SmallScreen() {
 
 export function LargeScreen() {
   return (
-    <Menubar className="max-sm:pl-8 pr-4 flex justify-between items-center">
+    <Menubar className="max-sm:pl-8 pr-10 flex justify-between items-center">
       <div className="flex">
         <MenubarMenu>
         <MenubarTrigger>
