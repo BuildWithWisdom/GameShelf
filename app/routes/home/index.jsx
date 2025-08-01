@@ -52,7 +52,7 @@ export default function Home({ loaderData }) {
           Find your next favorite game from our curated collection
         </p>
       </div>
-      <Filter games={games}/>
+      <Filter games={games} count = {gamesCount}/>
       {/* Renders the list of games. */}
       <section className="grid max-md:grid-cols-1 max-lg:grid-cols-2 lg:grid-cols-3 gap-6">
         {games.map((game) => {
